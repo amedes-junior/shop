@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/providers/orders.dart';
 import 'package:shop/widgets/app_drawer.dart';
+import '../widgets/order_widget.dart';
 
 class OrderScreen extends StatelessWidget {
   @override
@@ -15,7 +16,7 @@ class OrderScreen extends StatelessWidget {
       drawer: AppDrawer(),
       body: ListView.builder(
         itemCount: orders.itemsCount,
-        itemBuilder: (ctx, i) => Text(orders.items[i].total.toString()),
+        itemBuilder: (ctx, i) => OrderWidget(orders.items[i]),
       ),
     );
   }
