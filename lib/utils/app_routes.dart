@@ -4,4 +4,5 @@ class AppRoutes {
   static const ORDERS = '/orders';
   static const HOME = '/';
   static const PRODUCTS = '/products';
+  static const PRODUCT_FORM = '/product_form';
 }
