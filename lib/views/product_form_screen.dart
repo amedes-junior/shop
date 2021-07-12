@@ -22,6 +22,10 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
     setState(() {});
   }
 
+  void _saveForm() {
+    print('save');
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -36,6 +40,14 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Formulário Produto'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.save),
+            onPressed: () {
+              _saveForm();
+            },
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
@@ -74,6 +86,9 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                       keyboardType: TextInputType.url,
                       textInputAction: TextInputAction.done,
                       focusNode: _imageUrlFocusNote,
+                      onFieldSubmitted: (_) {
+                        _saveForm();
+                      },
                     ),
                   ),
                   Container(
