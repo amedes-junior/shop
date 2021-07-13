@@ -1,4 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+
+import '../providers/product.dart';
 
 class ProductFormScreen extends StatefulWidget {
   @override
@@ -11,6 +15,8 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
   final _imageUrlFocusNote = FocusNode();
 
   final _imageUrlController = TextEditingController();
+  final _form = GlobalKey<FormState>();
+  final _formData = Map<String, Object>();
 
   @override
   void initState() {
@@ -22,8 +28,36 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
     setState(() {});
   }
 
+  bool isValidImageUrl(String url) {
+    bool startWithHttp = url.toLowerCase().startsWith('http://');
+    bool startWithHttps = url.toLowerCase().startsWith('https://');
+    bool endsWithPng = url.toLowerCase().endsWith('.png');
+    bool endsWithJpg = url.toLowerCase().endsWith('.jpg');
+    bool endsWithJpeg = url.toLowerCase().endsWith('.jpeg');
+
+    return (startWithHttp || startWithHttps) &&
+        (endsWithPng || endsWithJpg || endsWithJpeg);
+  }
+
   void _saveForm() {
-    print('save');
+    var isvalid = _form.currentState.validate();
+    if (!isvalid) {
+      return;
+    }
+    _form.currentState.save();
+    final newProduct = Product(
+      id: Random().nextDouble().toString(),
+      title: _formData['title'],
+      description: _formData['description'],
+      price: _formData['price'],
+      imageUrl: _formData['imageUrl'],
+    );
+
+    // print(newProduct.id);
+    // print(newProduct.title);
+    // print(newProduct.price);
+    // print(newProduct.description);
+    // print(newProduct.imageUrl);
   }
 
   @override
@@ -52,6 +86,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Form(
+          key: _form,
           child: ListView(
             children: [
               TextFormField(
@@ -59,6 +94,16 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_priceFocusNote);
+                },
+                onSaved: (value) => _formData['title'] = value,
+                validator: (value) {
+                  if (value.trim().isEmpty) {
+                    return 'Informe um título válido!';
+                  }
+                  if (value.trim().length <= 3) {
+                    return 'Informe um título com no mínimo 3 letras!';
+                  }
+                  return null;
                 },
               ),
               TextFormField(
@@ -69,12 +114,14 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_descriptionFocusNote);
                 },
+                onSaved: (value) => _formData['price'] = double.parse(value),
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Descrição'),
                 maxLines: 3,
                 focusNode: _descriptionFocusNote,
                 keyboardType: TextInputType.multiline,
+                onSaved: (value) => _formData['description'] = value,
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -89,6 +136,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                       onFieldSubmitted: (_) {
                         _saveForm();
                       },
+                      onSaved: (value) => _formData['imageUrl'] = value,
                     ),
                   ),
                   Container(
