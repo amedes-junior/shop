@@ -28,6 +28,17 @@ class Products with ChangeNotifier {
   int get itemsCount {
     return _items.length;
   }
+
+  void updateProduct(Product product) {
+    if (product != null || product.id != null) {
+      return;
+    }
+    final index = _items.indexWhere((prod) => prod.id == product.id);
+    if (index >= 0) {
+      _items[index] = product;
+      notifyListeners();
+    }
+  }
 }
 
 
