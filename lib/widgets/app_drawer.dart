@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:shop/utils/app_routes.dart';
+import '../utils/app_routes.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Column(
-        children: [
+        children: <Widget>[
           AppBar(
-            title: Text('Bem vindo usuário'),
+            title: Text('Bem vindo Usuário!'),
             automaticallyImplyLeading: false,
           ),
           Divider(),
@@ -40,7 +40,7 @@ class AppDrawer extends StatelessWidget {
                 AppRoutes.PRODUCTS,
               );
             },
-          )
+          ),
         ],
       ),
     );

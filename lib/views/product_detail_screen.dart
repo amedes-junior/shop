@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../providers/product.dart';
 
 class ProductDetailScreen extends StatelessWidget {
@@ -10,13 +9,11 @@ class ProductDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          product.title,
-        ),
+        title: Text(product.title),
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: [
+          children: <Widget>[
             Container(
               height: 300,
               width: double.infinity,
@@ -41,7 +38,7 @@ class ProductDetailScreen extends StatelessWidget {
                 product.description,
                 textAlign: TextAlign.center,
               ),
-            )
+            ),
           ],
         ),
       ),

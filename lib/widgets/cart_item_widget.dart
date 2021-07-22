@@ -28,26 +28,25 @@ class CartItemWidget extends StatelessWidget {
       direction: DismissDirection.endToStart,
       confirmDismiss: (_) {
         return showDialog(
-          context: context,
-          builder: (ctx) => AlertDialog(
-            title: Text('Tem certeza ?'),
-            content: Text('Quer remover o item do carrinho ?'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(ctx).pop(false);
-                },
-                child: Text('Não'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(ctx).pop(true);
-                },
-                child: Text('Sim'),
-              )
-            ],
-          ),
-        );
+            context: context,
+            builder: (ctx) => AlertDialog(
+                  title: Text('Tem certeza?'),
+                  content: Text('Quer remover o item do carrinho?'),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text('Não'),
+                      onPressed: () {
+                        Navigator.of(ctx).pop(false);
+                      },
+                    ),
+                    FlatButton(
+                      child: Text('Sim'),
+                      onPressed: () {
+                        Navigator.of(ctx).pop(true);
+                      },
+                    ),
+                  ],
+                ));
       },
       onDismissed: (_) {
         Provider.of<Cart>(context, listen: false)
@@ -62,8 +61,11 @@ class CartItemWidget extends StatelessWidget {
           padding: EdgeInsets.all(8),
           child: ListTile(
             leading: CircleAvatar(
-              child: FittedBox(
-                child: Text('${cartItem.price}'),
+              child: Padding(
+                padding: EdgeInsets.all(5),
+                child: FittedBox(
+                  child: Text('${cartItem.price}'),
+                ),
               ),
             ),
             title: Text(cartItem.title),

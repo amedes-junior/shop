@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop/providers/cart.dart';
-
 import '../providers/product.dart';
+import '../providers/cart.dart';
 import '../utils/app_routes.dart';
 
 class ProductGridItem extends StatelessWidget {
@@ -20,12 +19,6 @@ class ProductGridItem extends StatelessWidget {
               AppRoutes.PRODUCT_DETAIL,
               arguments: product,
             );
-
-            // Navigator.of(context).push(
-            //   MaterialPageRoute(
-            //     builder: (ctx) => ProductDetailScreen(product),
-            //   ),
-            // );
           },
           child: Image.network(
             product.imageUrl,
@@ -38,10 +31,10 @@ class ProductGridItem extends StatelessWidget {
             builder: (ctx, product, _) => IconButton(
               icon: Icon(
                   product.isFavorite ? Icons.favorite : Icons.favorite_border),
+              color: Theme.of(context).accentColor,
               onPressed: () {
                 product.toggleFavorite();
               },
-              color: Theme.of(context).accentColor,
             ),
           ),
           title: Text(
@@ -50,14 +43,15 @@ class ProductGridItem extends StatelessWidget {
           ),
           trailing: IconButton(
             icon: Icon(Icons.shopping_cart),
+            color: Theme.of(context).accentColor,
             onPressed: () {
-              ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              ScaffoldMessenger.of(context).showSnackBar(
+              Scaffold.of(context).hideCurrentSnackBar();
+              Scaffold.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                    'Produto adicionando com sucesso!',
+                    'Produto adicionado com sucesso!',
                   ),
-                  duration: Duration(seconds: 3),
+                  duration: Duration(seconds: 2),
                   action: SnackBarAction(
                     label: 'DESFAZER',
                     onPressed: () {
@@ -68,7 +62,6 @@ class ProductGridItem extends StatelessWidget {
               );
               cart.addItem(product);
             },
-            color: Theme.of(context).accentColor,
           ),
         ),
       ),

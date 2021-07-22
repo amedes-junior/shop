@@ -31,7 +31,7 @@ class Cart with ChangeNotifier {
   }
 
   double get totalAmount {
-    double total = 0;
+    double total = 0.0;
     _items.forEach((key, cartItem) {
       total += cartItem.price * cartItem.quantity;
     });
@@ -62,27 +62,30 @@ class Cart with ChangeNotifier {
         ),
       );
     }
+
     notifyListeners();
   }
 
   void removeSingleItem(productId) {
-    if (!_items.containsKey(productId)) {
+    if(!_items.containsKey(productId)) {
       return;
     }
-    if (_items[productId].quantity == 1) {
+
+    if(_items[productId].quantity == 1) {
       _items.remove(productId);
     } else {
       _items.update(
         productId,
         (existingItem) => CartItem(
           id: existingItem.id,
-          productId: productId,
+          productId: existingItem.productId,
           title: existingItem.title,
           quantity: existingItem.quantity - 1,
           price: existingItem.price,
         ),
       );
     }
+
     notifyListeners();
   }
 
