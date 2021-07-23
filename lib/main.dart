@@ -14,6 +14,8 @@ import './providers/products.dart';
 import './providers/cart.dart';
 import './providers/orders.dart';
 
+// https://flutter-shop-e84ba-default-rtdb.firebaseio.com/
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
