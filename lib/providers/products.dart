@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shop/exceptions/http_exception.dart';
+import 'package:shop/utils/constants.dart';
 import './product.dart';
 
-final String _baseUrl =
-    'https://flutter-shop-e84ba-default-rtdb.firebaseio.com/products';
+final String _baseUrl = '{$Constants.BASE_API_URL}/products';
 
 class Products with ChangeNotifier {
   //List<Product> _items = DUMMY_PRODUCTS;
