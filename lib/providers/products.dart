@@ -27,6 +27,9 @@ class Products with ChangeNotifier {
 
   Future<void> loadProducts() async {
     final response = await http.get("$_baseUrl.json?auth=$_token");
+
+    print("$_baseUrl.json?auth=$_token");
+
     Map<String, dynamic> data = json.decode(response.body);
     _items.clear();
     if (data != null) {
@@ -111,11 +114,11 @@ class Products with ChangeNotifier {
 }
 
   // bool _showFavoriteOnly = false;
-  
+
   // void showFavoriteOnly() {
   //   _showFavoriteOnly = true;
   //   notifyListeners();
-  
+
   // }
   // void showAll() {
   //   _showFavoriteOnly = false;
