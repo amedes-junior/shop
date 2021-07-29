@@ -21,7 +21,7 @@ class Order {
 }
 
 class Orders with ChangeNotifier {
-  final String _baseUrl = '{$Constants.BASE_API_URL}/orders';
+  final String _baseUrl = '${Constants.BASE_API_URL}/orders';
   String _token;
   String _userId;
 

@@ -6,7 +6,7 @@ import 'package:shop/exceptions/http_exception.dart';
 import 'package:shop/utils/constants.dart';
 import './product.dart';
 
-final String _baseUrl = '{$Constants.BASE_API_URL}/products';
+final String _baseUrl = '${Constants.BASE_API_URL}/products';
 
 class Products with ChangeNotifier {
   //List<Product> _items = DUMMY_PRODUCTS;
@@ -31,7 +31,7 @@ class Products with ChangeNotifier {
     Map<String, dynamic> data = json.decode(response.body);
 
     final favResponse = await http.get(
-        "{$Constants.BASE_API_URL}/userFavorites/$userId.json?auth=$_token");
+        "${Constants.BASE_API_URL}/userFavorites/$userId.json?auth=$_token");
     final favMap = json.decode(favResponse.body);
 
     _items.clear();

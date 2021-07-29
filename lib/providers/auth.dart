@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shop/data/store.dart';
 import 'package:shop/exceptions/auth_exception.dart';
@@ -30,9 +30,11 @@ class Auth with ChangeNotifier {
     }
   }
 
-  Future<void> _authenticate(String email, String password, urlSegment) async {
+  Future<void> _authenticate(
+      String email, String password, String urlSegment) async {
     final url =
         "https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=AIzaSyDd8Cd66u1u1Q45Ec_xi5-1i-zl4HS_MEI";
+
     final response = await http.post(
       url,
       body: json.encode({
@@ -43,21 +45,23 @@ class Auth with ChangeNotifier {
     );
 
     final responseBody = json.decode(response.body);
-    if (responseBody['error'] != null) {
+    if (responseBody["error"] != null) {
       throw AuthException(responseBody['error']['message']);
     } else {
-      _token = responseBody['idToken'];
-      _userId = responseBody['localId'];
+      _token = responseBody["idToken"];
+      _userId = responseBody["localId"];
       _expiryDate = DateTime.now().add(
         Duration(
-          seconds: int.parse(responseBody['expiresIn']),
+          seconds: int.parse(responseBody["expiresIn"]),
         ),
       );
+
       Store.saveMap('userData', {
         "token": _token,
         "userId": _userId,
         "expiryDate": _expiryDate.toIso8601String(),
       });
+
       _autoLogout();
       notifyListeners();
     }
@@ -83,14 +87,15 @@ class Auth with ChangeNotifier {
       return Future.value();
     }
 
-    final expiryDate = DateTime.parse(userData['expiryDate']);
+    final expiryDate = DateTime.parse(userData["expiryDate"]);
+
     if (expiryDate.isBefore(DateTime.now())) {
       return Future.value();
     }
 
     _userId = userData["userId"];
     _token = userData["token"];
-    _expiryDate = userData["expiryDate"];
+    _expiryDate = expiryDate;
 
     _autoLogout();
     notifyListeners();
