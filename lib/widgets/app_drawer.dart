@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/providers/auth.dart';
+
 import '../utils/app_routes.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -31,6 +32,9 @@ class AppDrawer extends StatelessWidget {
               Navigator.of(context).pushReplacementNamed(
                 AppRoutes.ORDERS,
               );
+              // Navigator.of(context).pushReplacement(
+              //   CustomRoute(builder: (ctx) => OrdersScreen()),
+              // );
             },
           ),
           Divider(),
@@ -49,6 +53,9 @@ class AppDrawer extends StatelessWidget {
             title: Text('Sair'),
             onTap: () {
               Provider.of<Auth>(context, listen: false).logout();
+              Navigator.of(context).pushReplacementNamed(
+                AppRoutes.AUTH_HOME,
+              );
             },
           ),
         ],
